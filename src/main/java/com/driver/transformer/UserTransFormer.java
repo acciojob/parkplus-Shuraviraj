@@ -1,6 +1,6 @@
 package com.driver.transformer;
 
-import com.driver.entities.User;
+import com.driver.model.User;
 
 import java.util.ArrayList;
 

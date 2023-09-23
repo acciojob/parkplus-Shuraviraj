@@ -1,8 +1,8 @@
 package com.driver.transformer;
 
-import com.driver.entities.Payment;
-import com.driver.entities.Reservation;
+import com.driver.model.Payment;
 import com.driver.model.PaymentMode;
+import com.driver.model.Reservation;
 
 public class PaymentTransformer {
     public static Payment toPayment(Reservation reservation, String mode) {

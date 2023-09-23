@@ -1,6 +1,6 @@
 package com.driver.transformer;
 
-import com.driver.entities.Spot;
+import com.driver.model.Spot;
 import com.driver.model.SpotType;
 
 import java.util.ArrayList;

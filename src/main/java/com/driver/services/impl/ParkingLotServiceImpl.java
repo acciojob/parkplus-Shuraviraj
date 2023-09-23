@@ -1,7 +1,7 @@
 package com.driver.services.impl;
 
-import com.driver.entities.ParkingLot;
-import com.driver.entities.Spot;
+import com.driver.model.ParkingLot;
+import com.driver.model.Spot;
 import com.driver.repository.ParkingLotRepository;
 import com.driver.repository.SpotRepository;
 import com.driver.services.ParkingLotService;
@@ -33,7 +33,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         spotToBeSaved.setParkingLot(parkingLot);
 
         ParkingLot savedParkingLot = parkingLotRepository1.save(parkingLot);
-        
+
         return spotToBeSaved;
     }
 

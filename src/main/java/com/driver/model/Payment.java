@@ -1,6 +1,4 @@
-package com.driver.entities;
-
-import com.driver.model.PaymentMode;
+package com.driver.model;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

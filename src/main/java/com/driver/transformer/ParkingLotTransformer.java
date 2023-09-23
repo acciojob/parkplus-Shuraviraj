@@ -1,6 +1,6 @@
 package com.driver.transformer;
 
-import com.driver.entities.ParkingLot;
+import com.driver.model.ParkingLot;
 
 import java.util.ArrayList;
 

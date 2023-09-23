@@ -1,10 +1,10 @@
 package com.driver.services.impl;
 
-import com.driver.entities.ParkingLot;
-import com.driver.entities.Reservation;
-import com.driver.entities.Spot;
-import com.driver.entities.User;
+import com.driver.model.ParkingLot;
+import com.driver.model.Reservation;
+import com.driver.model.Spot;
 import com.driver.model.SpotType;
+import com.driver.model.User;
 import com.driver.repository.ParkingLotRepository;
 import com.driver.repository.ReservationRepository;
 import com.driver.repository.SpotRepository;

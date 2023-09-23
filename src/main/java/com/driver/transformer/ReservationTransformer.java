@@ -1,8 +1,8 @@
 package com.driver.transformer;
 
-import com.driver.entities.Reservation;
-import com.driver.entities.Spot;
-import com.driver.entities.User;
+import com.driver.model.Reservation;
+import com.driver.model.Spot;
+import com.driver.model.User;
 
 public class ReservationTransformer {
 

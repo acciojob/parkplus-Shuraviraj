@@ -1,4 +1,4 @@
-package com.driver.entities;
+package com.driver.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;

@@ -1,6 +1,4 @@
-package com.driver.entities;
-
-import com.driver.model.SpotType;
+package com.driver.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
