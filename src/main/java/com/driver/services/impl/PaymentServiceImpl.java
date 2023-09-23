@@ -25,13 +25,14 @@ public class PaymentServiceImpl implements PaymentService {
         }
         Reservation reservation = reservationRepository2.findById(reservationId).get();
         Spot spot = reservation.getSpot();
-        Integer totalAmount = reservation.getNumberOfHours() * spot.getPricePerHour();
+        int totalAmount = reservation.getNumberOfHours() * spot.getPricePerHour();
         if (totalAmount > amountSent) {
             throw new Exception("Insufficient Amount");
         }
         Payment payment = PaymentTransformer.toPayment(reservation, mode);
         reservation.setPayment(payment);
-        reservation = reservationRepository2.save(reservation);
-        return reservationRepository2.save(reservation).getPayment();
+        payment.setReservation(reservation);
+        reservationRepository2.save(reservation);
+        return payment;
     }
 }
