@@ -14,7 +14,9 @@ import com.driver.transformer.ReservationTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,20 +32,20 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation reserveSpot(Integer userId, Integer parkingLotId, Integer timeInHours, Integer numberOfWheels) throws Exception {
-        SpotType spotType;
+        SpotType mySpotType;
         switch (numberOfWheels) {
             case 1:
             case 2: {
-                spotType = SpotType.TWO_WHEELER;
+                mySpotType = SpotType.TWO_WHEELER;
                 break;
             }
             case 3:
             case 4: {
-                spotType = SpotType.FOUR_WHEELER;
+                mySpotType = SpotType.FOUR_WHEELER;
                 break;
             }
             default: {
-                spotType = SpotType.OTHERS;
+                mySpotType = SpotType.OTHERS;
                 break;
             }
         }
@@ -54,26 +56,28 @@ public class ReservationServiceImpl implements ReservationService {
         Optional<User> optionalUser = userRepository3.findById(userId);
         if (!optionalUser.isPresent()) throw new Exception("Cannot make reservation");
 
-        Spot spot = optionalParkingLot.get().getSpotList().stream()
-                .filter(s -> {
-                    switch (spotType) {
-                        case TWO_WHEELER: {
-                            return true;
-                        }
-                        case FOUR_WHEELER: {
-                            if (s.getSpotType() == SpotType.FOUR_WHEELER || s.getSpotType() == SpotType.OTHERS)
-                                return true;
-                            break;
-                        }
-                        case OTHERS: {
-                            if (s.getSpotType() == SpotType.OTHERS) return true;
-                            break;
-                        }
-                    }
-                    return false;
-                }).min(Comparator.comparingInt(Spot::getPricePerHour)).orElseThrow(() -> new Exception("Cannot make reservation"));
+        List<Spot> spotList = new ArrayList<>(optionalParkingLot.get().getSpotList());
+        spotList.sort(Comparator.comparingInt(Spot::getPricePerHour));
 
-        Reservation reservationTobeSaved = ReservationTransformer.toReservation(optionalUser.get(), timeInHours, spot);
+        Spot bestSpot = null;
+        for (Spot s : spotList) {
+            if (mySpotType == SpotType.OTHERS) {
+                if (s.getSpotType() != SpotType.OTHERS) continue;
+                bestSpot = s;
+                break;
+            } else if (mySpotType == SpotType.FOUR_WHEELER) {
+                if (s.getSpotType() == SpotType.FOUR_WHEELER || s.getSpotType() == SpotType.OTHERS) {
+                    bestSpot = s;
+                    break;
+                }
+            } else {
+                bestSpot = s;
+                break;
+            }
+        }
+        if (bestSpot == null) throw new Exception("Cannot make reservation");
+
+        Reservation reservationTobeSaved = ReservationTransformer.toReservation(optionalUser.get(), timeInHours, bestSpot);
         reservationRepository3.save(reservationTobeSaved);
         return reservationTobeSaved;
 
